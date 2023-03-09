@@ -1,5 +1,4 @@
 import joi from 'joi';
-import jwt from 'jsonwebtoken';
 import sequelize from 'sequelize';
 
 import { HttpError, NotFoundError } from '../../errors.js';
@@ -16,18 +15,18 @@ export function handleErrors(err, req, res, next) {
     case sequelize.ValidationError: {
       return res.status(400).json({ message: err.message });
     }
-    case jwt.TokenExpiredError:
-    case jwt.JsonWebTokenError: {
-      return res.status(401).json({ message: err.message });
-    }
     case NotFoundError: {
       return res.status(404).json({ message: err.message });
     }
     case HttpError: {
-      return res.status(err.status).json({ message: err.message });
+      return res
+        .status(err.status)
+        .json({ message: err.message });
     }
     default: {
-      return res.status(500).json({ message: 'Something unexpected happened' });
+      return res
+        .status(500)
+        .json({ message: 'Something unexpected happened' });
     }
   }
 }

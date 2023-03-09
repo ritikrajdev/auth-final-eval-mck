@@ -1,11 +1,17 @@
 import { config } from 'dotenv';
 
-const { NODE_ENV, DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME } =
-  process.env;
-
-if (!String(NODE_ENV).includes('docker')) {
+if (!String(process.env.NODE_ENV).includes('docker')) {
   config();
 }
+
+const {
+  NODE_ENV,
+  DB_HOST,
+  DB_PORT,
+  DB_USER,
+  DB_PASSWORD,
+  DB_NAME,
+} = process.env;
 
 const databaseConfig = {};
 databaseConfig[NODE_ENV ?? 'development'] = {
